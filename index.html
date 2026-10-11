@@ -1,0 +1,456 @@
+<title>Marketing Paradise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap">
+<style>
+/* Layout: navy boarding-pass hero, then a grid of twelve "ports"; each port opens as a stacked four-stop worksheet with passport stamps for completion. Midnight Executive system (navy/gold). */
+:root{
+  --bg:#F2F4F8; --surface:#FFFFFF; --sunk:#E7EBF2; --ink:#14213D; --muted:#55627C; --line:#D3DAE6;
+  --gold:#9C6F12; --gold-soft:#F5E9CC; --navy:#14213D; --on-navy:#F4F1E8; --navy-gold:#E4B85A;
+  --good:#24704C; --good-soft:#DDF0E5; --bad:#A63D2A; --bad-soft:#F7E1DB;
+  --display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1424; --surface:#142038; --sunk:#0F1A2E; --ink:#E7EBF3; --muted:#9AA7C0; --line:#26344F;
+  --gold:#E4B85A; --gold-soft:#3A3120; --navy:#091021; --on-navy:#F4F1E8; --navy-gold:#E4B85A;
+  --good:#6FCB9A; --good-soft:#163527; --bad:#F08E78; --bad-soft:#3D1F19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1424; --surface:#142038; --sunk:#0F1A2E; --ink:#E7EBF3; --muted:#9AA7C0; --line:#26344F;
+  --gold:#E4B85A; --gold-soft:#3A3120; --navy:#091021; --on-navy:#F4F1E8; --navy-gold:#E4B85A;
+  --good:#6FCB9A; --good-soft:#163527; --bad:#F08E78; --bad-soft:#3D1F19; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+
+/* Hero */
+.hero{background:var(--navy);color:var(--on-navy);padding-block:40px 32px}
+.hero .eyebrow{color:var(--navy-gold)}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:800;margin-top:10px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;font-weight:600;color:var(--navy-gold)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:end;margin-top:8px}
+.lede{font-size:18px;max-width:58ch;opacity:.92;margin-top:16px}
+.menu{font-family:var(--mono);font-size:14px;display:grid;gap:4px;margin-top:18px;opacity:.85}
+.menu span{color:var(--navy-gold)}
+.pass{border:1px solid rgba(228,184,90,.45);border-radius:var(--r);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.pass>div{padding:14px 16px}
+.pass>div+div{border-left:1px dashed rgba(228,184,90,.45)}
+.pass .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pass .v{font-family:var(--display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--navy-gold)}
+.pass .v small{font-size:16px;opacity:.7;color:var(--on-navy)}
+.pass .foot{grid-column:1/-1;border-left:0!important;border-top:1px dashed rgba(228,184,90,.45);font-family:var(--mono);font-size:12px;opacity:.75}
+
+/* Ports */
+main{padding-block:32px 56px}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.section-head h2{font-size:28px}
+.section-head p{color:var(--muted);max-width:60ch}
+.ports{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.port{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-align:left;display:grid;gap:6px;position:relative;min-height:150px;transition:transform .15s,border-color .15s}
+.port:hover{transform:translateY(-2px);border-color:var(--gold)}
+.port .code{font-family:var(--mono);font-weight:600;font-size:22px;letter-spacing:.08em;color:var(--gold)}
+.port .nm{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15}
+.port .tag{font-size:14px;color:var(--muted)}
+.port .pts{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:auto;font-variant-numeric:tabular-nums}
+.meter{height:4px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--gold)}
+.stamp{position:absolute;top:12px;right:12px;width:62px;height:62px;border-radius:50%;border:2px dashed var(--good);color:var(--good);display:grid;place-items:center;text-align:center;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.08em;line-height:1.2;transform:rotate(-14deg);background:var(--good-soft)}
+.stamp b{display:block;font-size:14px}
+
+/* Port view */
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;color:var(--muted)}
+.back:hover{color:var(--ink);border-color:var(--ink)}
+.port-head{display:grid;gap:10px;margin:18px 0 26px}
+.port-head h2{font-size:clamp(30px,5vw,44px)}
+.port-head .hook{font-size:18px;max-width:62ch;color:var(--muted)}
+.stop{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:18px}
+.stop-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:14px}
+.stop-head .n{font-family:var(--mono);font-size:13px;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 10px}
+.stop-head h3{font-size:22px}
+.stop-head .score{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.instr{color:var(--muted);margin-bottom:14px;max-width:65ch}
+
+.sort{display:grid;gap:10px}
+.sort-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.sort-row .item{font-weight:500;min-width:0}
+.choice{display:flex;gap:6px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px}
+.pill:hover:not(:disabled){border-color:var(--gold)}
+.pill:disabled{cursor:default}
+.pill.sel.ok{background:var(--good-soft);border-color:var(--good);color:var(--good);font-weight:600}
+.pill.sel.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);font-weight:600}
+.why{grid-column:1/-1;font-size:14px;color:var(--muted);border-left:3px solid var(--gold);padding-left:10px}
+.why b{color:var(--ink)}
+
+.scen{display:grid;gap:14px}
+.q{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--bg)}
+.q p.t{font-weight:500;margin-bottom:10px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 12px;font-size:15px}
+.opt:hover:not(:disabled){border-color:var(--gold)}
+.opt:disabled{cursor:default}
+.opt .L{font-family:var(--mono);font-weight:600;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);flex:none;font-size:13px}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.ok .L{background:var(--good);color:var(--surface)}
+.opt.no{border-color:var(--bad);background:var(--bad-soft)}
+.opt.no .L{background:var(--bad);color:var(--surface)}
+.q .why{margin-top:10px}
+
+.lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:22px;align-items:start}
+.lab-ctrl{display:grid;gap:14px}
+.priceout{font-family:var(--display);font-size:48px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.range-ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.ledger{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ledger td{padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ledger td:last-child{text-align:right;font-family:var(--mono)}
+.ledger tr.profit td{font-weight:600;border-bottom:0}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:8px;padding:10px 18px;font-weight:600}
+.btn:hover{opacity:.9}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+.chart{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:300px}
+.chart .cap{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:4px}
+.result{margin-top:14px;padding:14px;border-radius:8px;background:var(--gold-soft);display:grid;gap:6px}
+.result .big{font-family:var(--mono);font-weight:600}
+
+.prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.prompt{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--bg);display:grid;gap:10px;align-content:start}
+.prompt .eyebrow{font-size:11px}
+.prompt p{font-size:16px}
+.copy{justify-self:start;font-size:13px;padding:6px 12px}
+.port-foot{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:8px}
+.next{display:flex;gap:10px;flex-wrap:wrap}
+
+.glossary{margin-top:40px;border-top:1px solid var(--line);padding-top:26px}
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px 22px;margin-top:14px}
+.gl div{font-size:14px;color:var(--muted)}
+.gl b{display:block;color:var(--ink);font-size:15px}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-top:36px;font-size:13px;color:var(--muted)}
+
+@media (max-width:760px){
+  .hero-grid,.lab,.prompts{grid-template-columns:1fr}
+  .opts{grid-template-columns:1fr}
+  .sort-row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">AP Business with Personal Finance</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Marketing <em>Paradise</em></h1>
+        <p class="lede">Many businesses include the basics in one price. So why do customers still pay extra? Visit twelve business settings. At each one, sort what's free from what costs extra, name the pricing tactic, set a profit-maximizing price, and discuss what you found with your class.</p>
+      </div>
+      <div class="pass" aria-label="Your progress">
+        <div><div class="k">Ports stamped</div><div class="v" id="hStamps">0<small> / 12</small></div></div>
+        <div><div class="k">Points</div><div class="v" id="hPts">0<small> / 180</small></div></div>
+        <div class="foot">15 points per port · 6 sort · 4 tactics · 5 price lab</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<script>
+const TACTICS={
+  bundle:{n:"Bundling",d:"Packaging several items at one price so buyers spend more in total and stop comparing each item."},
+  anchor:{n:"Price anchoring",d:"Showing a high price first so the next price looks reasonable by comparison."},
+  scarcity:{n:"Scarcity and urgency",d:"Limiting time or quantity so buyers act now instead of thinking it over."},
+  convenience:{n:"Convenience premium",d:"Charging for time, effort, or hassle saved."},
+  captive:{n:"Captive market pricing",d:"Charging more where customers have few or no alternatives."},
+  tiered:{n:"Tiered (dynamic) pricing",d:"Charging different prices to different segments, dates, or levels of service."},
+  experience:{n:"Premium positioning",d:"Pricing an upgraded experience on status, comfort, and exclusivity rather than cost."},
+  psych:{n:"Psychological pricing",d:"Using price formats and payment methods that make spending feel smaller."},
+  decoy:{n:"Decoy effect",d:"Adding an option mainly to make another option look like the better deal."},
+  loyalty:{n:"Loyalty rewards",d:"Rewarding repeat purchases so customers keep coming back."},
+  drip:{n:"Drip (partitioned) pricing",d:"Showing a low base price and adding required fees later in the purchase."},
+  placement:{n:"Visual merchandising",d:"Arranging products and store layout to trigger unplanned purchases."}
+};
+
+const PORTS=[
+{code:"CRU",name:"Cruise Ship",tag:"A floating business enterprise",
+ hook:"Food is already in the fare, yet the specialty restaurants and drink packages sell out. The cruise line has to give passengers a reason to pay twice.",
+ sort:[["Main dining room dinner",1,"Built into the fare. It sets the baseline the upsells are compared against."],["Lido deck buffet",1,"Included, and always open, which makes paid dining a choice about experience, not hunger."],["Specialty steakhouse",0,"Extra. Passengers pay for atmosphere, a smaller room, and a night that feels special."],["Drip coffee and tea",1,"Included. The basic version stays free so the premium version can be sold."],["Specialty espresso drinks",0,"Extra. Same need (coffee), upgraded product."],["Fruit smoothie with a tiny umbrella",0,"Extra, and charged to the cabin card."]],
+ scen:[["A beverage package covers smoothies, specialty coffee, and soda for one daily price.","bundle","Several items sold together at one price, so passengers stop counting each drink."],["Every purchase is charged to the cabin key card. Passengers never handle cash.","psych","Swiping a card feels smaller than handing over bills, so spending rises."],["The steakhouse menu shows a $79 tasting menu first, beside a $45 three-course option.","anchor","The $79 option makes $45 feel like the sensible choice."],["On port days, the spa announces 30% off treatments, today only.","scarcity","A deadline pushes passengers to book before they reconsider."]],
+ lab:{prod:"Steakhouse dinner",who:"4,000 passengers this sailing",cost:22,a:1600,b:20,min:25,max:80,step:1,twist:"Many lines sell multi-night dining packages. A lower single-night price can make the package look like the better deal."},
+ discuss:"A passenger has already paid for unlimited food. List three needs the steakhouse meets that the included dining room does not.",
+ canvas:"For your Business Canvas Project: which revenue streams in your business are \"included\" and which could be sold as an upgrade?"},
+{code:"PRK",name:"Theme Park",tag:"Admission is just the start",
+ hook:"The ticket gets you through the gate. Time, comfort, and memories are sold separately.",
+ sort:[["Rides with a standard queue",1,"Covered by admission."],["Afternoon parade",1,"Included entertainment that keeps guests in the park longer, and spending."],["Skip-the-line pass",0,"Extra. The park sells back the time its own lines take."],["On-ride photo",0,"Extra, sold at the exit while the moment is fresh."],["Refillable souvenir cup",0,"Extra, with a high first price and cheap refills."],["Water fountains",1,"Included, and often hard to find."]],
+ scen:[["Outside food is restricted, and bottled water inside costs triple the price at a store outside the gates.","captive","Guests have few alternatives once inside."],["Tuesday tickets cost less than Saturday tickets for the same park.","tiered","Different prices for different days fill quiet days and profit on busy ones."],["A pass lets guests skip the regular line at popular rides.","convenience","The guest pays to save time."],["A limited-edition anniversary popcorn bucket is sold this month only.","scarcity","Limited time and quantity create urgency and collectors."]],
+ lab:{prod:"All-day skip-the-line pass",who:"10,000 guests today",cost:4,a:3000,b:25,min:10,max:120,step:1,twist:"Parks often cap how many passes they sell. If too many guests skip the line, the pass stops working and regular guests get angry."},
+ discuss:"Is selling skip-the-line passes fair to guests who can't afford one? Argue both sides from the park's point of view.",
+ canvas:"For your Business Canvas Project: what could your customers pay for to save time or effort?"},
+{code:"AIR",name:"Airport Terminal",tag:"Past security, few choices",
+ hook:"Once travelers clear security, they can't leave. Every shop and restaurant knows it.",
+ sort:[["Security screening",1,"Paid for through the ticket and fees, not at the checkpoint."],["Gate seating",1,"Included, but often crowded, which helps sell the alternative."],["Airline lounge access",0,"Extra, or earned through status."],["Water fountain and bottle filler",1,"Included."],["Phone charging outlets",1,"Free, though the good seats near them go fast."],["Priority boarding",0,"Extra. Passengers pay for overhead bin space and calm."]],
+ scen:[["A bottle of water past security costs $5.29.","captive","Travelers can't bring liquids through and can't leave."],["Travelers who reach a status level get free lounge access.","loyalty","The perk rewards repeat flying with one airline."],["A fast-track security lane is sold for $15.","convenience","Travelers pay to skip waiting."],["Fares come in Basic, Main, and Premium, and Basic removes seat selection and carry-on bags.","tiered","Different service levels for different traveler segments."]],
+ lab:{prod:"Lounge day pass",who:"900 likely buyers in the terminal",cost:18,a:900,b:10,min:20,max:90,step:1,twist:"Lounges also earn through credit card partnerships, so the walk-up day pass is only one of several revenue streams."},
+ discuss:"Why can airport businesses charge more than the same business outside the airport? What keeps prices from rising forever?",
+ canvas:"For your Business Canvas Project: where does your business have customers who can't easily go elsewhere?"},
+{code:"CIN",name:"Movie Theater",tag:"The ticket is the cover charge",
+ hook:"Much of each ticket goes back to the film's distributor. Popcorn is where the theater makes its living.",
+ sort:[["Standard seat",1,"Covered by the ticket."],["Trailers before the film",1,"Included, and they sell future tickets."],["Premium large-format screen",0,"Extra surcharge for the bigger picture and sound."],["Popcorn",0,"Extra, and the highest-margin item in the building."],["Candy",0,"Extra."],["Restrooms",1,"Included."]],
+ scen:[["Small popcorn $7.50, medium $9.75, large $10.25.","decoy","The medium mostly exists to make the large look like a bargain."],["A combo of large popcorn, two drinks, and candy is sold for one price.","bundle","Items packaged together raise the total sale."],["The giant-screen showing costs $6 more than the standard screen.","experience","The upgrade is priced on the experience, not on cost."],["Tickets on Tuesday cost half the weekend price.","tiered","Lower prices fill seats on a slow night."]],
+ lab:{prod:"Large popcorn",who:"600 moviegoers tonight",cost:1.10,a:600,b:40,min:2,max:15,step:0.25,twist:"A theater might accept a lower popcorn price if it brings families back more often. Concessions and tickets work together."},
+ discuss:"Would you rather the theater raise ticket prices and lower popcorn prices? Who wins and who loses under each plan?",
+ canvas:"For your Business Canvas Project: which item could be your \"popcorn,\" the high-margin add-on to your main product?"},
+{code:"STD",name:"Sports Stadium",tag:"Game day economics",
+ hook:"The game is the reason fans come. Food, merchandise, and better seats are how the stadium profits from the trip.",
+ sort:[["Game admission",1,"Covered by the ticket."],["Scoreboard replays",1,"Included."],["Club-level seat",0,"Extra, priced for comfort and status."],["Hot dog",0,"Extra."],["Team jersey",0,"Extra, and sold at every gate."],["Water fountain",1,"Included."]],
+ scen:[["Tickets cost more for rivalry games and playoff dates.","tiered","Price changes with demand for each game."],["One concession company runs all the food stands, and outside food isn't allowed.","captive","Fans have no alternatives once inside."],["Season ticket holders earn points toward merchandise discounts.","loyalty","Rewards encourage fans to renew."],["Club seats include padded chairs, a private lounge, and indoor restrooms.","experience","Comfort and exclusivity justify a high price."]],
+ lab:{prod:"Stadium hot dog",who:"40,000 fans today",cost:1.40,a:12000,b:1000,min:2,max:12,step:0.25,twist:"Some stadiums have cut concession prices and found that fans bought more items per visit, so total food sales rose."},
+ discuss:"A stadium lowers food prices. Name two ways that decision could raise total profit.",
+ canvas:"For your Business Canvas Project: how would you build customer relationships that make people renew every year?"},
+{code:"FST",name:"Music Festival",tag:"Three days in a field",
+ hook:"Fans pay to get in, then discover that shade, charging, and a clean restroom all have a price.",
+ sort:[["General admission stage access",1,"Covered by the wristband."],["Water refill stations",1,"Included."],["VIP viewing platform",0,"Extra."],["Festival T-shirt",0,"Extra."],["Phone charging locker",0,"Extra, and in demand by day two."],["Festival map app",1,"Free, and it shows every food vendor."]],
+ scen:[["Early-bird tickets sell out, then the next tier costs more.","scarcity","Rising tiers push fans to buy early."],["Wristbands are loaded with credits, so no cash is used inside.","psych","Credits feel less like real money."],["The VIP pass includes a shaded lounge, flush restrooms, and express entry.","experience","Comfort and status priced well above cost."],["Phone charging lockers cost $25 a day where outlets are hard to find.","convenience","Fans pay to avoid the hassle of a dead phone."]],
+ lab:{prod:"VIP upgrade",who:"2,400 interested fans",cost:60,a:2400,b:6,min:60,max:400,step:5,twist:"Price too high and the VIP area looks empty, which weakens the exclusive experience you're selling."},
+ discuss:"Why do festivals sell tickets in rising tiers instead of one price? How does it help with planning?",
+ canvas:"For your Business Canvas Project: how could you use pricing tiers to learn about demand before launch?"},
+{code:"SKI",name:"Ski Resort",tag:"Lift tickets and hot chocolate",
+ hook:"The mountain is free to look at. Getting up it, and staying warm, is the business.",
+ sort:[["Lift access with your ticket",1,"Covered by the lift ticket."],["Groomed trails",1,"Included."],["Ski lessons",0,"Extra."],["Equipment rental",0,"Extra."],["Lodge seating",1,"Included, though crowded at noon."],["Fast-track lift line",0,"Extra."]],
+ scen:[["Lift tickets bought online seven days ahead cost less than at the window.","tiered","Planners pay less; walk-ups pay more."],["Season passes go on sale in spring, and the price ends December 1.","scarcity","A deadline locks in skiers before the season starts."],["Beginners can buy lift, rental, and a lesson in one package.","bundle","One price for everything a new skier needs."],["Hot chocolate at the summit costs twice the base lodge price.","captive","Skiers at the top have one place to buy."]],
+ lab:{prod:"Beginner lesson package",who:"500 first-timers this weekend",cost:45,a:500,b:2,min:50,max:250,step:5,twist:"Resorts often price beginner packages low on purpose. A happy beginner may buy a season pass for years."},
+ discuss:"Explain customer lifetime value using the beginner skier. Why might a low first price pay off?",
+ canvas:"For your Business Canvas Project: which customer segment is worth winning at a low first price?"},
+{code:"RES",name:"Hotel Resort",tag:"The fee is in the fine print",
+ hook:"The nightly rate gets the booking. Fees, minibars, and upgrades fill in the rest.",
+ sort:[["Pool access",1,"Included."],["Basic Wi-Fi",1,"Included, with faster speeds sold as an upgrade."],["Minibar snacks",0,"Extra, at a steep markup."],["Late checkout",0,"Extra."],["Nightly resort fee",0,"Extra and mandatory, added after the advertised rate."],["Fitness center",1,"Included."]],
+ scen:[["A $45 nightly resort fee is added at checkout on top of the advertised rate.","drip","The base price looks low; the required fee comes later."],["Ocean-view rooms cost more than garden-view rooms of the same size.","tiered","Different prices for different levels of the same product."],["Minibar sensors charge the room as soon as an item is lifted.","convenience","The guest pays for having snacks right there."],["Guests who book direct get a member rate and points toward free nights.","loyalty","Rewards keep guests booking with the same brand."]],
+ lab:{prod:"Late checkout (2 p.m.)",who:"600 rooms checking out",cost:8,a:240,b:4,min:10,max:60,step:1,twist:"Late checkouts delay housekeeping and arriving guests. Capacity, not just profit, limits how many you can sell."},
+ discuss:"Should resort fees be included in the advertised price? Who benefits from showing them separately?",
+ canvas:"For your Business Canvas Project: list every cost your customer pays. Is your price clear from the start?"},
+{code:"GRO",name:"Grocery Store",tag:"The aisle is the salesperson",
+ hook:"Walking in is free. The layout is designed so you leave with more than you planned.",
+ sort:[["Entering and browsing",1,"Free, and the longer you browse, the more you buy."],["Free samples",1,"Included, and they turn tasters into buyers."],["Shopping cart",1,"Included. Bigger carts tend to hold more."],["Custom-decorated bakery cake",0,"Extra, priced well above a plain cake."],["Hot prepared meal",0,"Extra. Shoppers pay for skipping the cooking."],["Home delivery",0,"Extra."]],
+ scen:[["Candy and gum sit right at the checkout lane.","placement","Placement triggers impulse buys while shoppers wait."],["Yogurt is priced 10 for $10.","psych","A round multi-buy price nudges shoppers to buy more than one."],["The store brand sits next to the name brand, which costs $2 more.","anchor","The name-brand price makes the store brand look like a smart deal."],["A store card unlocks the sale prices.","loyalty","Rewards bring shoppers back and give the store purchase data."]],
+ lab:{prod:"Rotisserie chicken",who:"400 shoppers likely to buy today",cost:4.20,a:400,b:30,min:4.25,max:13,step:0.25,twist:"Many warehouse clubs sell rotisserie chickens at a loss on purpose. The chicken sits at the back, and shoppers fill carts on the way."},
+ discuss:"What is a loss leader? Explain why a store might choose a price below the profit-maximizing one you just found.",
+ canvas:"For your Business Canvas Project: could any product in your plan act as a loss leader?"},
+{code:"CAF",name:"Coffee Shop",tag:"Three dollars of coffee, six dollars of habit",
+ hook:"Water, seats, and Wi-Fi are free. The shop earns its margin one extra shot at a time.",
+ sort:[["Wi-Fi",1,"Included, and it keeps customers there longer."],["Cup of water",1,"Included."],["Seating",1,"Included."],["Extra espresso shot",0,"Extra."],["Oat milk swap",0,"Extra."],["Flavor syrup",0,"Extra."]],
+ scen:[["Small, medium, and large, with the large only 40 cents more than the medium.","decoy","The medium makes the large look like the best value."],["A pumpkin spice drink returns for fall only.","scarcity","Seasonal availability creates urgency and buzz."],["Every purchase in the app earns points toward a free drink.","loyalty","Rewards build the daily habit."],["Order ahead in the app and skip the line.","convenience","Customers value the time saved, and app orders tend to be larger."]],
+ lab:{prod:"Seasonal latte",who:"900 customers this week",cost:1.30,a:900,b:120,min:2,max:7.5,step:0.1,twist:"Seasonal drinks also bring lapsed customers back. The return visit can be worth more than the margin on one cup."},
+ discuss:"A customer says, \"It's only a dollar for the extra shot.\" Calculate what a daily extra shot costs in a year, then discuss it as a personal finance choice.",
+ canvas:"For your Business Canvas Project: what small, repeatable purchase could become a habit for your customers?"},
+{code:"GAM",name:"Mobile Game",tag:"Free to download, not free to play",
+ hook:"The game costs nothing to download. The company still earns millions, a few dollars at a time.",
+ sort:[["Downloading the game",1,"Free. A free download brings in millions of players."],["Playing the main levels",1,"Included. Players need to enjoy the game before they will pay."],["Character skin",0,"Extra. It changes the look, not the gameplay, and players pay for status."],["Season pass",0,"Extra. It unlocks rewards for the season."],["Instant refill of lives",0,"Extra. Players can wait or pay to keep playing now."],["Daily login reward",1,"Included, and it brings players back every day."]],
+ scen:[["Gems are sold in packs, and every item is priced in gems instead of dollars.","psych","Prices in gems hide the real dollar cost, so spending feels smaller."],["A rare skin appears in the shop for 48 hours, then disappears.","scarcity","A short window pushes players to buy before it is gone."],["Log in seven days in a row to unlock a bonus chest.","loyalty","Rewards for returning build a daily habit."],["Wait 30 minutes for lives to refill, or spend 50 gems to keep playing now.","convenience","Players pay to skip the wait."]],
+ lab:{prod:"Season pass",who:"20,000 active players this season",cost:0.20,a:6000,b:400,min:1,max:15,step:0.1,twist:"Digital items cost almost nothing to copy. Many games still price the pass low, because active players also buy skins."},
+ discuss:"Is it fair to price items in gems instead of dollars? Figure out what 50 gems really cost if 550 gems sell for $4.99.",
+ canvas:"For your Business Canvas Project: could your business offer a free version and earn money from upgrades?"},
+{code:"STR",name:"Streaming Service",tag:"One monthly fee, many plans",
+ hook:"A monthly fee gets you the library. Ads, picture quality, and bundles are where the pricing gets creative.",
+ sort:[["Library of shows and movies",1,"Included in every plan."],["Separate profiles for each family member",1,"Included, and they make the service harder to cancel."],["Ad-free viewing on the basic plan",0,"Extra. Removing ads requires a higher-priced plan."],["Renting a brand-new movie release",0,"Extra, even for subscribers."],["4K picture quality",0,"Extra, saved for the top plan."],["Personalized recommendations",1,"Included, and they keep viewers watching."]],
+ scen:[["Plans come in Basic with ads, Standard, and Premium with 4K, each at a higher monthly price.","tiered","Different levels of service for different customer segments."],["The yearly plan is advertised as \"just $12.92 a month\" instead of $154.99 a year.","psych","A monthly figure makes a large payment feel small."],["A video service and a music service are sold together for one monthly price.","bundle","Two products at one price make each feel cheaper and make canceling harder."],["The pricing page shows the $22.99 Premium plan first, so $15.49 Standard looks moderate.","anchor","The first, highest price makes the next one look reasonable."]],
+ lab:{prod:"Ad-free upgrade (per month)",who:"50,000 subscribers on the ad plan",cost:1.00,a:20000,b:2000,min:1.5,max:10,step:0.25,twist:"The cost here is the ad revenue the service gives up for each upgrade. Price it too low and the service earns less than it did by showing ads."},
+ discuss:"List every subscription your household pays for each month. Which one gives the best value for how you actually use it?",
+ canvas:"For your Business Canvas Project: could your business earn recurring revenue through a subscription?"}
+];
+
+/* Tactics too close to the correct answer for each question, kept out of the distractors so every question has one defensible answer. */
+const AVOID={
+ CRU:["convenience decoy","convenience drip","decoy experience tiered","tiered"],
+ PRK:["convenience experience","scarcity","tiered experience","decoy"],
+ AIR:["convenience","experience tiered","tiered experience","drip decoy experience"],
+ CIN:["anchor psych bundle","decoy","tiered","scarcity"],
+ STD:["scarcity","convenience","bundle","tiered bundle"],
+ FST:["tiered","convenience","bundle tiered","captive"],
+ SKI:["scarcity","loyalty tiered","convenience","convenience"],
+ RES:["psych","experience","captive psych","tiered"],
+ GRO:["convenience scarcity","bundle","decoy","tiered"],
+ CAF:["anchor","tiered","bundle","experience"],
+ GAM:["bundle drip anchor","tiered experience","scarcity","captive scarcity psych"],
+ STR:["decoy experience anchor","anchor loyalty tiered","tiered","decoy tiered"]
+};
+/* Balanced, seeded answer positions: each letter A–D is correct exactly 10 times across the 40 tactic questions. */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+(function buildOptions(){
+  const r=rng(2027);
+  const positions=shuffle([].concat(...Array(PORTS.length).fill([0,1,2,3])),r);
+  const keys=Object.keys(TACTICS);let k=0;
+  PORTS.forEach(p=>p.scen.forEach((s,qi)=>{
+    const correct=s[1];
+    const avoid=(AVOID[p.code]||[])[qi]||"";
+    const others=shuffle(keys.filter(x=>x!==correct&&!avoid.split(" ").includes(x)),r).slice(0,3);
+    const pos=positions[k++];
+    const opts=others.slice();opts.splice(pos,0,correct);
+    s.opts=opts;s.ans=pos;
+  }));
+})();
+
+const LS="marketing-paradise-v2";
+let state={};
+try{state=JSON.parse(localStorage.getItem(LS))||{}}catch(e){state={}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+function ps(code){return state[code]||(state[code]={sort:{},tac:{},price:null})}
+
+function profitAt(l,P){const q=Math.round(Math.max(0,l.a-l.b*P));return{q,rev:P*q,cost:l.cost*q,profit:(P-l.cost)*q}}
+function optimum(l){return(l.a/l.b+l.cost)/2}
+function money(v,dec){return(v<0?"−$":"$")+Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:dec,maximumFractionDigits:dec})}
+function decOf(l){return l.step<1?2:0}
+
+function scoreOf(p){
+  const s=ps(p.code);let pts=0;
+  p.sort.forEach((it,i)=>{if(s.sort[i]!==undefined&&s.sort[i]===it[1])pts++});
+  p.scen.forEach((q,i)=>{if(s.tac[i]===q.ans)pts++});
+  if(s.price)pts+=s.price.score;
+  const done=Object.keys(s.sort).length===6&&Object.keys(s.tac).length===4&&!!s.price;
+  return{pts,done};
+}
+function updateHero(){
+  let pts=0,st=0;PORTS.forEach(p=>{const r=scoreOf(p);pts+=r.pts;if(r.done)st++});
+  document.getElementById("hStamps").innerHTML=st+"<small> / "+PORTS.length+"</small>";
+  document.getElementById("hPts").innerHTML=pts+"<small> / "+PORTS.length*15+"</small>";
+}
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderHome(){
+  updateHero();
+  let html=`<div class="section-head"><h2>Choose a port of call</h2><p>Each setting takes about 10 minutes. Finish all four stops to earn the passport stamp.</p></div><div class="ports">`;
+  PORTS.forEach((p,i)=>{const r=scoreOf(p);
+    html+=`<button class="port" data-i="${i}" aria-label="${esc(p.name)}, ${r.pts} of 15 points${r.done?", stamped":""}">
+      ${r.done?`<span class="stamp" aria-hidden="true"><span><b>${p.code}</b>CLEARED</span></span>`:""}
+      <span class="code">${p.code}</span><span class="nm">${esc(p.name)}</span><span class="tag">${esc(p.tag)}</span>
+      <span class="pts">${r.pts} / 15 pts</span><span class="meter"><i style="width:${r.pts/15*100}%"></i></span></button>`});
+  html+=`</div>
+  <section class="glossary"><div class="eyebrow">Field guide</div><h2 style="font-size:24px;margin-top:6px">Twelve tactics you'll spot</h2>
+  <div class="gl">${Object.values(TACTICS).map(t=>`<div><b>${t.n}</b>${t.d}</div>`).join("")}</div></section>
+  <footer><span></span><span><button class="btn ghost" id="resetAll">Reset all progress</button></span></footer>`;
+  app.innerHTML=html;
+  app.querySelectorAll(".port").forEach(b=>b.onclick=()=>openPort(+b.dataset.i));
+  const rb=document.getElementById("resetAll");
+  rb.onclick=()=>{if(rb.dataset.c){state={};save();renderHome()}else{rb.dataset.c=1;rb.textContent="Tap again to erase all scores"}};
+}
+
+let cur=0;
+function openPort(i){cur=i;renderPort();window.scrollTo({top:document.querySelector(".hero").offsetHeight-8,behavior:"smooth"})}
+
+function renderPort(){
+  const p=PORTS[cur],s=ps(p.code),l=p.lab,d=decOf(l);
+  const sortPts=p.sort.reduce((a,it,i)=>a+(s.sort[i]===it[1]?1:0),0);
+  const tacPts=p.scen.reduce((a,q,i)=>a+(s.tac[i]===q.ans?1:0),0);
+  const startP=s.price?s.price.p:Math.round(((l.min+l.max)/2+ (l.max-l.min)*0.2)/l.step)*l.step;
+  let h=`<button class="back" id="back">← All ports</button>
+  <div class="port-head"><div class="eyebrow">Port ${cur+1} of ${PORTS.length} · ${p.code}</div><h2>${esc(p.name)}</h2><p class="hook">${esc(p.hook)}</p></div>
+
+  <section class="stop"><div class="stop-head"><span class="n">Stop 1</span><h3>Included or extra?</h3><span class="score">${sortPts} / 6</span></div>
+  <p class="instr">Decide whether each item comes with the basic price or costs extra.</p><div class="sort">`;
+  p.sort.forEach((it,i)=>{const a=s.sort[i];const ans=a!==undefined;
+    const cls=v=>ans&&a===v?(v===it[1]?"sel ok":"sel no"):"";
+    h+=`<div class="sort-row"><span class="item">${esc(it[0])}</span><span class="choice">
+      <button class="pill ${cls(1)}" data-s="${i}" data-v="1" ${ans?"disabled":""}>Included</button>
+      <button class="pill ${cls(0)}" data-s="${i}" data-v="0" ${ans?"disabled":""}>Extra charge</button></span>
+      ${ans?`<p class="why"><b>${a===it[1]?"Correct.":"Not quite."}</b> ${esc(it[2])}</p>`:""}</div>`});
+  h+=`</div></section>
+
+  <section class="stop"><div class="stop-head"><span class="n">Stop 2</span><h3>Name the tactic</h3><span class="score">${tacPts} / 4</span></div>
+  <p class="instr">Which pricing or marketing tactic is the business using?</p><div class="scen">`;
+  p.scen.forEach((q,i)=>{const a=s.tac[i];const ans=a!==undefined;
+    h+=`<div class="q"><p class="t">${esc(q[0])}</p><div class="opts">`;
+    q.opts.forEach((o,j)=>{let c="";if(ans){if(j===q.ans)c="ok";else if(j===a)c="no"}
+      h+=`<button class="opt ${c}" data-q="${i}" data-o="${j}" ${ans?"disabled":""}><span class="L">${"ABCD"[j]}</span>${TACTICS[o].n}</button>`});
+    h+=`</div>${ans?`<p class="why"><b>${a===q.ans?"Correct.":"The answer is "+TACTICS[q[1]].n+"."}</b> ${esc(q[2])} <br>${TACTICS[q[1]].d}</p>`:""}</div>`});
+  h+=`</div></section>
+
+  <section class="stop"><div class="stop-head"><span class="n">Stop 3</span><h3>Price lab: ${esc(l.prod)}</h3><span class="score">${s.price?s.price.score:0} / 5</span></div>
+  <p class="instr">Each one costs ${money(l.cost,2)} to provide. Your market is ${esc(l.who)}. Raise the price and fewer people buy. Find the price that earns the most profit, then lock it in.</p>
+  <div class="lab"><div class="lab-ctrl">
+    <div><div class="eyebrow">Your price</div><div class="priceout" id="pOut"></div></div>
+    <div><input type="range" id="pRange" min="${l.min}" max="${l.max}" step="${l.step}" value="${startP}" aria-label="Price"><div class="range-ends"><span>${money(l.min,d)}</span><span>${money(l.max,d)}</span></div></div>
+    <table class="ledger"><tbody>
+      <tr><td>Buyers</td><td id="lQ"></td></tr><tr><td>Revenue</td><td id="lR"></td></tr>
+      <tr><td>Cost (${money(l.cost,2)} each)</td><td id="lC"></td></tr><tr class="profit"><td>Profit</td><td id="lP"></td></tr></tbody></table>
+    <div><button class="btn" id="lock">${s.price?"Lock in a new price":"Lock in my price"}</button></div>
+  </div>
+  <div><div class="chart"><svg id="curve" viewBox="0 0 600 240" role="img" aria-label="Profit at each price"></svg><div class="cap">Profit at each price. Dot shows your current price.</div></div>
+  <div id="result"></div></div></div></section>
+
+  <section class="stop"><div class="stop-head"><span class="n">Stop 4</span><h3>Discuss with your class</h3></div>
+  <div class="prompts">
+    <div class="prompt"><div class="eyebrow">Discussion</div><p>${esc(p.discuss)}</p><button class="btn ghost copy" data-c="d">Copy prompt</button></div>
+    <div class="prompt"><div class="eyebrow">Business Canvas Project link</div><p>${esc(p.canvas)}</p><button class="btn ghost copy" data-c="c">Copy prompt</button></div>
+  </div></section>
+
+  <div class="port-foot"><button class="btn ghost" id="resetPort">Reset this port</button>
+  <div class="next">${cur>0?`<button class="btn ghost" id="prev">← ${esc(PORTS[cur-1].name)}</button>`:""}${cur<PORTS.length-1?`<button class="btn" id="nxt">${esc(PORTS[cur+1].name)} →</button>`:`<button class="btn" id="back2">See your passport</button>`}</div></div>`;
+  app.innerHTML=h;updateHero();
+
+  document.getElementById("back").onclick=goHome;
+  const b2=document.getElementById("back2");if(b2)b2.onclick=goHome;
+  const pv=document.getElementById("prev");if(pv)pv.onclick=()=>openPort(cur-1);
+  const nx=document.getElementById("nxt");if(nx)nx.onclick=()=>openPort(cur+1);
+  app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{s.sort[b.dataset.s]=+b.dataset.v;save();keep(renderPort)});
+  app.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{s.tac[b.dataset.q]=+b.dataset.o;save();keep(renderPort)});
+  app.querySelectorAll(".copy").forEach(b=>b.onclick=()=>copy(b,b.dataset.c==="d"?p.discuss:p.canvas));
+  const rp=document.getElementById("resetPort");
+  rp.onclick=()=>{if(rp.dataset.c){delete state[p.code];save();renderPort()}else{rp.dataset.c=1;rp.textContent="Tap again to reset"}};
+
+  const range=document.getElementById("pRange");
+  const draw=()=>{const P=+range.value,r=profitAt(l,P);
+    document.getElementById("pOut").textContent=money(P,d);
+    document.getElementById("lQ").textContent=Math.round(r.q).toLocaleString("en-US");
+    document.getElementById("lR").textContent=money(r.rev,0);
+    document.getElementById("lC").textContent=money(r.cost,0);
+    document.getElementById("lP").textContent=money(r.profit,0);
+    drawCurve(l,P,!!s.price)};
+  range.oninput=draw;draw();
+  if(s.price)showResult(l,s.price);
+  document.getElementById("lock").onclick=()=>{
+    const P=+range.value,best=profitAt(l,optimum(l)).profit,got=profitAt(l,P).profit;
+    const pct=Math.max(0,got/best);const score=pct>=.98?5:pct>=.9?4:pct>=.75?3:pct>=.5?2:1;
+    s.price={p:P,pct,score};save();keep(renderPort);
+  };
+}
+function showResult(l,pr){
+  const d=decOf(l),o=optimum(l);
+  document.getElementById("result").innerHTML=`<div class="result">
+   <span class="big">You locked in ${money(pr.p,d)}: ${Math.round(pr.pct*100)}% of the maximum profit (${pr.score} / 5 pts).</span>
+   <span>The profit-maximizing price is about ${money(o,2)}, where profit reaches ${money(profitAt(l,o).profit,0)}. Notice that it sits halfway between the cost and the price at which nobody buys.</span>
+   <span><b>Twist:</b> ${esc(l.twist)}</span></div>`;
+}
+function drawCurve(l,P,reveal){
+  const W=600,H=240,L=78,R=16,T=16,B=36,n=80;
+  const best=profitAt(l,optimum(l)).profit,ymax=best*1.12;
+  const x=v=>L+(v-l.min)/(l.max-l.min)*(W-L-R),y=v=>T+(1-Math.max(0,v)/ymax)*(H-T-B);
+  let pts=[];for(let i=0;i<=n;i++){const v=l.min+(l.max-l.min)*i/n;pts.push([x(v),y(profitAt(l,v).profit)])}
+  const line=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const area=line+` L${x(l.max)} ${y(0)} L${x(l.min)} ${y(0)} Z`;
+  const d=decOf(l);let grid="";
+  [0,.5,1].forEach(f=>{const v=best*f,yy=y(v);grid+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="var(--line)"/><text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="12" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${money(v,0)}</text>`});
+  [l.min,(l.min+l.max)/2,l.max].forEach(v=>{grid+=`<text x="${x(v)}" y="${H-12}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${money(v,d)}</text>`});
+  const cp=profitAt(l,P).profit;
+  const opt=reveal?`<line x1="${x(optimum(l))}" x2="${x(optimum(l))}" y1="${T}" y2="${y(0)}" stroke="var(--good)" stroke-dasharray="4 4"/><text x="${x(optimum(l))+6}" y="${T+12}" font-size="12" fill="var(--good)" font-family="IBM Plex Mono, monospace">best</text>`:"";
+  document.getElementById("curve").innerHTML=`${grid}<path d="${area}" fill="var(--gold-soft)"/><path d="${line}" fill="none" stroke="var(--gold)" stroke-width="2.5"/>${opt}
+   <line x1="${x(P)}" x2="${x(P)}" y1="${y(cp)}" y2="${y(0)}" stroke="var(--ink)" stroke-opacity=".35"/><circle cx="${x(P)}" cy="${y(cp)}" r="7" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>`;
+}
+function keep(fn){const yv=window.scrollY;fn();window.scrollTo(0,yv)}
+function goHome(){renderHome();window.scrollTo({top:0,behavior:"smooth"})}
+function copy(btn,text){
+  const done=()=>{btn.textContent="Copied";setTimeout(()=>btn.textContent="Copy prompt",1600)};
+  try{navigator.clipboard.writeText(text).then(done,()=>sel(btn))}catch(e){sel(btn)}
+}
+function sel(btn){const p=btn.previousElementSibling;const r=document.createRange();r.selectNodeContents(p);const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Text selected, press Ctrl+C"}
+renderHome();
+</script>
